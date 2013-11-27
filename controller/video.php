@@ -8,9 +8,15 @@ class Video extends Controller {
 
 	public function watch($id) {
 
-		$this->view->video = (object) Array('id' => $id);
+		$this->view->video = (object) Array(
+			'id' => $id,
+			'url' => 'Wildlife.wmv'
+		);
 
 		$this->view->title = 'Watching '. $id;
+
+		$this->view->addRemoteStylesheet('//vjs.zencdn.net/4.2/video-js.css');
+		$this->view->addScript('//vjs.zencdn.net/4.2/video.js');
 
 		$this->render('watch');
 	}
