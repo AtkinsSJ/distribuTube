@@ -40,7 +40,7 @@ class View {
 	 * Add a remote stylesheet link
 	 */
 	public function addRemoteStylesheet($url) {
-		$this->styles[] = '<link rel="stylesheet" url="'.$url.'" />';
+		$this->styles[] = '<link rel="stylesheet" href="'.$url.'" />';
 	}
 
 	/**
