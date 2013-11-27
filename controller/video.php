@@ -10,9 +10,9 @@ class Video extends Controller {
 
 		$this->view->video = (object) Array(
 			'id' => $id,
-			'title' => 'Wildlife.wmv',
+			'title' => 'Wildlife',
 			'sources' => Array(
-				'ogg' => 'videos/Wildlife.ogv'
+				'ogv' => 'videos/Wildlife.ogv'
 			)
 		);
 
