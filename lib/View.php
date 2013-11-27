@@ -26,11 +26,28 @@ class View {
 		}
 	}
 
+	/**
+	 * Add a local stylesheet link, which will be shrunk with CssCrush
+	 */
 	public function addStylesheet($filename) {
 		$this->styles[] = csscrush::tag(
 			Config::get('global', 'cssdir') . $filename,
 			array('debug' => false)
 		);
+	}
+
+	/**
+	 * Add a remote stylesheet link
+	 */
+	public function addRemoteStylesheet($url) {
+		$this->styles[] = $url;
+	}
+
+	/**
+	 * Add a script link
+	 */
+	public function addScript($url) {
+		$this->js[] = $url;
 	}
 
 	public function pushMessage($message, $type=Message::INFO) {

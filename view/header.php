@@ -7,5 +7,11 @@
 	<?php foreach ($this->styles as $style): ?>
 	<?=$style?>
 	<?php endforeach; ?>
+	<script type="text/javascript" src="js/modernizr.custom.js"></script>
 </head>
 <body>
+	<header class="main-header">
+		<h1>DistribuTube</h1>
+	</header>
+
+	<div class="main-content">
