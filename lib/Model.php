@@ -7,7 +7,6 @@ class Model {
 	private $_table;
 
 	private static $db = null;
-	private static $userId = null;
 
 	/**
 	 * Empty constructor. Just initialises base state.
@@ -40,17 +39,6 @@ class Model {
 		$model->_fields = $fields;
 		return $model;
 	}
-
-	/**
-	 * Set the user ID for all Model instances.
-	 */
-	public static function setUserId($userId) {
-		Model::$userId = $userId;
-	}
-
-	public static function getUserId() {
-		return Model::$userId;
-	}
 	
 	/**
 	 * Load data into the model, from the database, using the given $id.
@@ -62,12 +50,10 @@ class Model {
 		$stmt = $db->prepare(
 			"SELECT *
 			FROM {$db->tablePrefix}{$this->_table}
-			WHERE id = :id
-				AND user_id = :userId"
+			WHERE id = :id"
 		);
 
-		if ( $stmt->execute( array('id' => $id,
-									'userId' => Model::$userId) ) ) {
+		if ( $stmt->execute( array('id' => $id) ) ) {
 			$result = $stmt->fetch(PDO::FETCH_ASSOC);
 			if (!$result) {
 				throw new DatabaseException('Record does not exist', $query, $stmt->errorInfo());
@@ -125,10 +111,6 @@ class Model {
 	 */
 	public function save() {
 
-		if (Model::$userId == null) {
-			throw new ModelException('Attempting to save a model when no userID set.');
-		}
-
 		if ($this->_id == null) {
 			// Record does not exist, so create a new one!
 			return $this->_saveNew();
@@ -163,7 +145,6 @@ class Model {
 		$query = "INSERT INTO {$db->tablePrefix}{$this->_table} ";
 
 		$fields = $this->_fields;
-		$fields['user_id'] = Model::$userId;
 
 		$query .= '(' . implode(', ', array_keys($fields)) . ')';
 
@@ -186,17 +167,14 @@ class Model {
 		if ($this->_id == null) {
 			throw new ModelException('Attempting to delete a model which has no id.');
 		}
-		if (Model::$userId == null) {
-			throw new ModelException('Attempting to delete a model when no userID set.');
-		}
 
 		$db = Model::$db;
 		$query = "DELETE FROM {$db->tablePrefix}{$this->_table}
-			WHERE id = :id AND user_id = :userId
+			WHERE id = :id
 			LIMIT 1";
 
 		$stmt = $db->prepare($query);
-		if ($stmt->execute(array( 'id' => $this->_id, 'userId' => Model::$userId ))) {
+		if ($stmt->execute(array( 'id' => $this->_id))) {
 			return;
 		} else {
 			throw new DatabaseException('Could not delete record.', $query, $stmt->errorInfo());

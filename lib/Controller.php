@@ -7,9 +7,9 @@ class Controller {
 
 	public function __construct($name, $mustBeLoggedIn=false) {
 		$this->user = new User();
-		if ($this->user->isLoggedIn()) {
-			Model::setUserId($this->user->getID());
-		}
+		// if ($this->user->isLoggedIn()) {
+		// 	Model::setUserId($this->user->getID());
+		// }
 
 		if ($mustBeLoggedIn && !$this->user->isLoggedIn()) {
 			Session::pushMessage('Your session has expired. Please log in.', Message::ERROR);
