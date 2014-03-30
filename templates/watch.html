@@ -1,5 +1,14 @@
 {% extends "base.html" %}
-{% block title %}{{ video_name }}{% endblock %}
+
+{% block title %}{{ video.title }}{% endblock %}
+
 {% block content %}
-	A video view would go here.
+<div class="video-wrapper">
+	<video class="video-js vjs-default-skin"
+controls preload="auto" poster="{{video.poster}}">
+	{% for format, url in video.sources.items() %}
+		<source src="{{ url }}" type='video/{{ format }}' />
+	{% endfor %}
+	</video>
+</div>
 {% endblock %}
