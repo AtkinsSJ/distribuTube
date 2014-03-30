@@ -1,3 +1,7 @@
 /**
 Basic style file
 */
+
+video {
+	width: 100%;
+}
