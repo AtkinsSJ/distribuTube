@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>{% block title %}{% endblock %} - distribuTube</title>
+</head>
+<body>
+	<header><h1>{{ self.title() }}</h1></header>
+
+	<div class="main">{% block content %}{% endblock %}</div>
+
+	<footer>
+		Powered by <a href="https://github.com/AtkinsSJ/distribuTube">distribuTube</a>
+	</footer>
+	
+	{% for script in scripts %}
+	<script type="text/javascript" src="{{script}}"></script>
+	{% endfor %}
+</body>
+</html>
