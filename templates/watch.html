@@ -12,3 +12,13 @@ controls preload="auto" poster="{{video.poster}}">
 	</video>
 </div>
 {% endblock %}
+
+{% set js = '
+Modernizr.load({
+	test: Modernizr.video,
+	nope: [
+		"//vjs.zencdn.net/4.2/video.js",
+		"//vjs.zencdn.net/4.2/video-js.css"
+	]
+})
+' %}

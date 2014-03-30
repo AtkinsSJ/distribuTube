@@ -3,7 +3,9 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>{% block title %}{% endblock %} - distribuTube</title>
+	<!--<base href="{{ config.server_name }}"/>-->
 
+	<script type="text/javascript" src="{{ url_for('static', filename='js/modernizr.custom.js') }}"></script>
 	{% for stylesheet in stylesheets %}
 	<link rel="stylesheet" type="text/css" href="{{stylesheet}}">
 	{% endfor %}
@@ -20,5 +22,9 @@
 	{% for script in scripts %}
 	<script type="text/javascript" src="{{script}}"></script>
 	{% endfor %}
+
+	{% if js %}
+	<script type="text/javascript">{{ js|safe }}</script>
+	{% endif %}
 </body>
 </html>

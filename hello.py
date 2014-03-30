@@ -1,5 +1,10 @@
 from flask import Flask, render_template, url_for
+from configparser import ConfigParser
+
 app = Flask(__name__)
+config = ConfigParser()
+config.read("config.ini")
+app.config.update(config["app"])
 
 @app.route("/")
 def hello():
@@ -7,8 +12,6 @@ def hello():
 
 @app.route("/watch/<video_slug>")
 def watch(video_slug):
-	scripts = ["//vjs.zencdn.net/4.2/video.js"]
-	stylesheets = ["//vjs.zencdn.net/4.2/video-js.css"]
 	video = {
 		"id": video_slug,
 		"title": "Test Video",
@@ -21,10 +24,8 @@ def watch(video_slug):
 	}
 	return render_template(
 		"watch.html",
-		scripts=scripts,
-		stylesheets=stylesheets,
 		video=video
 	)
 
 if __name__ == "__main__":
-	app.run(debug=True)
+	app.run(host="0.0.0.0")
